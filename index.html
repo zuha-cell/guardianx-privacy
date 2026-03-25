@@ -2,276 +2,274 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="theme-color" content="#0A0F1E"/>
-<title>Guardian X — Emergency Live Tracker</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<title>Guardian X — Privacy Policy</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0A0F1E;color:#fff;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-  #header{background:linear-gradient(135deg,#B71C1C,#7F0000);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,0.5)}
-  .sos-badge{background:#FF1744;border-radius:8px;padding:5px 11px;font-weight:900;font-size:18px;letter-spacing:3px;animation:pulse 1.2s ease-in-out infinite;flex-shrink:0}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,23,68,0.7)}70%{box-shadow:0 0 0 10px rgba(255,23,68,0)}}
-  #header .info{flex:1;min-width:0}
-  #header h1{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  #header p{font-size:11px;opacity:0.7;margin-top:1px}
-  #map{flex:1;min-height:300px;width:100%;position:relative}
-  #loading{position:absolute;inset:0;background:#0D1B2A;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999}
-  .spinner{width:40px;height:40px;border:3px solid #1A2A3A;border-top:3px solid #4FC3F7;border-radius:50%;animation:spin 0.9s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  #loading p{margin-top:10px;opacity:0.5;font-size:13px}
-  #panel{background:#0D1B2A;padding:12px 14px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;border-top:1px solid #1A2A3A}
-  .person-card{background:#1A0A0A;border:1.5px solid #D32F2F;border-radius:12px;padding:12px 14px}
-  .person-card .pname{font-size:17px;font-weight:800;color:#EF5350}
-  .person-card .pphone{font-size:13px;color:#FFCDD2;margin-top:3px}
-  .person-card .ptime{font-size:11px;opacity:0.4;margin-top:4px}
-  .person-card .ploc{font-size:11px;color:#90CAF9;margin-top:3px;opacity:0.8}
-  .stats-row{display:flex;gap:8px}
-  .stat{flex:1;background:#1A2A3A;border-radius:10px;padding:9px 8px;text-align:center}
-  .stat .slabel{font-size:8px;text-transform:uppercase;letter-spacing:1px;opacity:0.45;margin-bottom:2px}
-  .stat .sval{font-size:20px;font-weight:800;color:#4FC3F7;line-height:1.1}
-  .stat .sunit{font-size:9px;opacity:0.5;margin-top:1px}
-  .btn{width:100%;padding:13px 16px;border-radius:12px;border:none;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
-  .btn:active{opacity:0.75}
-  .btn-call{background:#1B5E20;color:#fff}
-  .btn-locate{background:#0D47A1;color:#fff}
-  .btn-coming{background:#4A148C;color:#fff}
-  #status-box{background:#0A200A;border:1px solid #2E7D32;border-radius:10px;padding:10px 12px;font-size:12.5px;color:#C8E6C9;display:none;line-height:1.5}
-  #err-box{background:#1A0A0A;border:1px solid #B71C1C;border-radius:10px;padding:10px 12px;font-size:12px;color:#FFCDD2;display:none;text-align:center}
-  .powered{text-align:center;font-size:10px;opacity:0.3;padding:6px;flex-shrink:0}
+  * { margin:0; padding:0; box-sizing:border-box }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0A0F1E;
+    color: #e0e0e0;
+    line-height: 1.8;
+    padding: 0 0 60px 0;
+  }
+
+  /* Language switcher */
+  #lang-bar {
+    background: #0D1B2A;
+    padding: 10px 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #1A2A3A;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .lang-btn {
+    background: #1A2A3A;
+    color: #90CAF9;
+    border: 1px solid #2A3A4A;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .lang-btn.active {
+    background: #1565C0;
+    color: #fff;
+    border-color: #1565C0;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #B71C1C, #7F0000);
+    padding: 24px 20px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo {
+    width: 50px; height: 50px;
+    background: #FF1744;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 900; color: #fff;
+    flex-shrink: 0;
+  }
+  .header h1 { font-size: 22px; font-weight: 800; color: #fff; }
+  .header p  { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+  .content { padding: 20px 18px; max-width: 700px; margin: 0 auto; }
+  .badge {
+    display: inline-block;
+    background: #1B5E20; color: #C8E6C9;
+    font-size: 12px; font-weight: 700;
+    padding: 4px 12px; border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 16px; font-weight: 700; color: #4FC3F7;
+    margin: 28px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #1A2A3A;
+  }
+  p  { font-size: 14px; color: #c0c0c0; margin-bottom: 10px; }
+  ul { margin: 0 0 12px 20px; }
+  li { font-size: 14px; color: #c0c0c0; margin-bottom: 6px; }
+  b  { color: #e0e0e0; }
+  a  { color: #4FC3F7; }
+  .updated {
+    text-align: center; font-size: 11px; color: #4A6070;
+    margin-top: 40px; padding-top: 16px;
+    border-top: 1px solid #1A2A3A;
+  }
+  .section { display: none; }
+  .section.visible { display: block; }
 </style>
 </head>
 <body>
 
-<div id="header">
-  <div class="sos-badge">SOS</div>
-  <div class="info">
-    <h1 id="hdr-title">Emergency Alert</h1>
-    <p id="hdr-sub">Guardian X • Live Location Tracker</p>
+<div id="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">🇬🇧 English</button>
+  <button class="lang-btn" onclick="setLang('ml')">🇮🇳 മലയാളം</button>
+  <button class="lang-btn" onclick="setLang('hi')">🇮🇳 हिन्दी</button>
+  <button class="lang-btn" onclick="setLang('ta')">🇮🇳 தமிழ்</button>
+</div>
+
+<div class="header">
+  <div class="logo">GX</div>
+  <div>
+    <h1>Guardian X</h1>
+    <p id="hdr-sub">Emergency SOS — Privacy Policy</p>
   </div>
 </div>
 
-<div id="map">
-  <div id="loading">
-    <div class="spinner"></div>
-    <p>Loading map...</p>
+<div class="content">
+  <div class="badge" id="badge-text">✅ No data sold. No tracking. Privacy first.</div>
+
+  <!-- ENGLISH -->
+  <div id="sec-en" class="section visible">
+    <h2>1. What We Collect</h2>
+    <p>Guardian X collects only what is necessary for emergency safety features:</p>
+    <ul>
+      <li><b>Location (GPS)</b> — only when SOS is triggered or live tracking is active. Never collected silently in the background.</li>
+      <li><b>Emergency contacts</b> — names and phone numbers you enter manually. Stored only on your device.</li>
+      <li><b>Device sensors</b> — accelerometer (shake detection), compass/magnetometer (compass feature). Never transmitted.</li>
+      <li><b>Anonymous ad data</b> — Google AdMob collects anonymous ad interaction data per Google's own privacy policy.</li>
+    </ul>
+
+    <h2>2. What We Do NOT Collect</h2>
+    <ul>
+      <li>We do not collect your name, email, or account details</li>
+      <li>We do not store your location on any server</li>
+      <li>We do not read your SMS history, call logs, or phone contacts beyond what you manually enter</li>
+      <li>We do not sell any data to any third party</li>
+      <li>We do not track you across other apps or websites</li>
+    </ul>
+
+    <h2>3. How We Use Location</h2>
+    <p>Location is used exclusively to:</p>
+    <ul>
+      <li>Include your GPS coordinates in emergency SOS messages sent by SMS to your chosen contacts</li>
+      <li>Generate a live tracking link (Ultra Pro feature) shared only with your emergency contacts when SOS is triggered</li>
+      <li>Detect your country automatically to show the correct emergency service numbers</li>
+    </ul>
+    <p><b>Location is never uploaded to our servers.</b> The live tracking link encodes your coordinates directly in the URL — no backend database stores this data. When your contact opens the link, their browser calculates the distance locally.</p>
+
+    <h2>4. Live Tracker Feature (Ultra Pro)</h2>
+    <p>When SOS is triggered with live tracking enabled, a URL is generated containing your GPS coordinates, your name, and your phone number. This URL is sent via SMS to your emergency contacts only. No server stores this data. The link uses OpenStreetMap to display the map — no Google account or API key is required.</p>
+
+    <h2>5. Permissions Explained</h2>
+    <ul>
+      <li><b>SEND_SMS</b> — to send emergency SOS alerts to your contacts</li>
+      <li><b>CALL_PHONE</b> — to call emergency contacts and services directly</li>
+      <li><b>ACCESS_FINE_LOCATION</b> — to include GPS in emergency messages</li>
+      <li><b>FOREGROUND_SERVICE</b> — to keep shake-to-SOS active when app is in background</li>
+      <li><b>RECEIVE_BOOT_COMPLETED</b> — to restart shake monitoring after phone reboot</li>
+      <li><b>CAMERA</b> — to activate flashlight SOS strobe signal</li>
+      <li><b>VIBRATE</b> — for SOS vibration pattern and Morse code</li>
+      <li><b>READ_CONTACTS</b> — only to let you pick a contact from your phonebook; not stored elsewhere</li>
+    </ul>
+
+    <h2>6. Third Party Services</h2>
+    <ul>
+      <li><b>Google AdMob</b> — serves banner and rewarded ads. See <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</li>
+      <li><b>Google Play Billing</b> — handles in-app purchases. No payment data is processed by Guardian X directly.</li>
+      <li><b>OpenStreetMap</b> — used in the live tracking web page to display maps. No personal data is shared with OpenStreetMap.</li>
+    </ul>
+
+    <h2>7. Data Retention</h2>
+    <p>All data (emergency contacts, settings, notes) is stored only on your device using Android SharedPreferences. Uninstalling the app permanently deletes all local data. We retain nothing on servers because Guardian X has no servers.</p>
+
+    <h2>8. Children's Privacy</h2>
+    <p>Guardian X is not directed at children under 13. We do not knowingly collect information from children.</p>
+
+    <h2>9. Your Rights</h2>
+    <p>You can delete all app data at any time: Android Settings → Apps → Guardian X → Storage → Clear Data. You can revoke any permission: Android Settings → Apps → Guardian X → Permissions.</p>
+
+    <h2>10. Changes to This Policy</h2>
+    <p>We may update this policy. The latest version will always be available at this URL. Continued use of the app after changes constitutes acceptance.</p>
+
+    <h2>11. Contact</h2>
+    <p>Privacy questions: <a href="mailto:mzndigital@gmail.com">mzndigital@gmail.com</a></p>
+  </div>
+
+  <!-- MALAYALAM -->
+  <div id="sec-ml" class="section">
+    <h2>1. ഞങ്ങൾ ശേഖരിക്കുന്നത്</h2>
+    <p>Guardian X അടിയന്തര സുരക്ഷാ സവിശേഷതകൾക്ക് ആവശ്യമായ ഡേറ്റ മാത്രം ശേഖരിക്കുന്നു:</p>
+    <ul>
+      <li><b>ലൊക്കേഷൻ (GPS)</b> — SOS ട്രിഗർ ചെയ്യുമ്പോൾ അല്ലെങ്കിൽ ലൈവ് ട്രാക്കിംഗ് സജീവമാകുമ്പോൾ മാത്രം. പശ്ചാത്തലത്തിൽ ഒരിക്കലും ശേഖരിക്കില്ല.</li>
+      <li><b>അടിയന്തര കോൺടാക്റ്റുകൾ</b> — നിങ്ങൾ സ്വയം നൽകുന്ന പേരുകളും ഫോൺ നമ്പറുകളും. ഉപകരണത്തിൽ മാത്രം സൂക്ഷിക്കുന്നു.</li>
+      <li><b>ഉപകരണ സെൻസറുകൾ</b> — ആക്സിലറോമീറ്റർ (ഷേക്ക് ഡിറ്റക്ഷൻ), കോമ്പസ്. ഒരിക്കലും ട്രാൻസ്മിറ്റ് ചെയ്യില്ല.</li>
+    </ul>
+    <h2>2. ഞങ്ങൾ ശേഖരിക്കാത്തത്</h2>
+    <ul>
+      <li>ഞങ്ങൾ ഡേറ്റ വിൽക്കുന്നില്ല</li>
+      <li>ഞങ്ങൾ ലൊക്കേഷൻ സെർവറിൽ സൂക്ഷിക്കുന്നില്ല</li>
+      <li>ഞങ്ങൾ SMS, കോൾ ലോഗ്, ഫോൺ കോൺടാക്റ്റ് ഡേറ്റ വായിക്കുന്നില്ല</li>
+    </ul>
+    <h2>3. ലൊക്കേഷൻ ഉപയോഗം</h2>
+    <p>SOS SMS-ൽ GPS കോർഡിനേറ്റ് ഉൾപ്പെടുത്താനും രാജ്യ തിരിച്ചറിയലിനും മാത്രം ഉപയോഗിക്കുന്നു. ഡേറ്റ ഒരിക്കലും സെർവറിൽ അപ്‌ലോഡ് ചെയ്യുന്നില്ല.</p>
+    <h2>4. ബന്ധപ്പെടുക</h2>
+    <p>സ്വകാര്യതാ ചോദ്യങ്ങൾ: <a href="mailto:mzndigital@gmail.com">mzndigital@gmail.com</a></p>
+  </div>
+
+  <!-- HINDI -->
+  <div id="sec-hi" class="section">
+    <h2>1. हम क्या एकत्र करते हैं</h2>
+    <p>Guardian X केवल आपातकालीन सुरक्षा सुविधाओं के लिए आवश्यक डेटा एकत्र करता है:</p>
+    <ul>
+      <li><b>स्थान (GPS)</b> — केवल SOS ट्रिगर होने पर। पृष्ठभूमि में कभी नहीं।</li>
+      <li><b>आपातकालीन संपर्क</b> — आपके द्वारा दर्ज नाम और फ़ोन नंबर। केवल डिवाइस पर संग्रहीत।</li>
+      <li><b>डिवाइस सेंसर</b> — एक्सेलेरोमीटर (शेक डिटेक्शन), कम्पास। कभी प्रसारित नहीं।</li>
+    </ul>
+    <h2>2. हम क्या एकत्र नहीं करते</h2>
+    <ul>
+      <li>हम कोई डेटा नहीं बेचते</li>
+      <li>हम स्थान सर्वर पर संग्रहीत नहीं करते</li>
+      <li>हम SMS, कॉल लॉग या फ़ोन संपर्क नहीं पढ़ते</li>
+    </ul>
+    <h2>3. स्थान उपयोग</h2>
+    <p>SOS SMS में GPS निर्देशांक शामिल करने और देश पहचान के लिए केवल उपयोग किया जाता है। डेटा कभी सर्वर पर अपलोड नहीं होता।</p>
+    <h2>4. संपर्क</h2>
+    <p>गोपनीयता प्रश्न: <a href="mailto:mzndigital@gmail.com">mzndigital@gmail.com</a></p>
+  </div>
+
+  <!-- TAMIL -->
+  <div id="sec-ta" class="section">
+    <h2>1. நாங்கள் சேகரிப்பது</h2>
+    <p>Guardian X அவசரகால பாதுகாப்பு அம்சங்களுக்கு மட்டுமே தேவையான தரவை சேகரிக்கிறது:</p>
+    <ul>
+      <li><b>இருப்பிடம் (GPS)</b> — SOS தூண்டப்படும்போது மட்டுமே. பின்னணியில் ஒருபோதும் இல்லை.</li>
+      <li><b>அவசரகால தொடர்புகள்</b> — நீங்கள் உள்ளிட்ட பெயர்கள் மற்றும் தொலைபேசி எண்கள். சாதனத்தில் மட்டுமே சேமிக்கப்படும்.</li>
+      <li><b>சாதன உணரிகள்</b> — அவசர நோக்கங்களுக்காக மட்டுமே. ஒருபோதும் அனுப்பப்படாது.</li>
+    </ul>
+    <h2>2. நாங்கள் சேகரிக்காதது</h2>
+    <ul>
+      <li>நாங்கள் தரவை விற்பனை செய்வதில்லை</li>
+      <li>இருப்பிடத்தை சேவையகத்தில் சேமிப்பதில்லை</li>
+      <li>SMS, அழைப்பு பதிவுகள் படிப்பதில்லை</li>
+    </ul>
+    <h2>3. தொடர்பு</h2>
+    <p>தனியுரிமை கேள்விகள்: <a href="mailto:mzndigital@gmail.com">mzndigital@gmail.com</a></p>
+  </div>
+
+  <div class="updated">
+    Last updated: March 2026 · Guardian X by MZN Digital<br>
+    <a href="index.html" style="color:#4A6070;font-size:11px">← Back to Live Tracker</a>
   </div>
 </div>
-
-<div id="panel">
-
-  <div class="person-card">
-    <div class="pname" id="pc-name">Loading...</div>
-    <div class="pphone" id="pc-phone"></div>
-    <div class="ploc" id="pc-loc"></div>
-    <div class="ptime" id="pc-time"></div>
-  </div>
-
-  <div class="stats-row">
-    <div class="stat">
-      <div class="slabel">Distance</div>
-      <div class="sval" id="s-dist">—</div>
-      <div class="sunit" id="s-dist-unit">calculating</div>
-    </div>
-    <div class="stat">
-      <div class="slabel">Est. Drive</div>
-      <div class="sval" id="s-eta">—</div>
-      <div class="sunit">minutes</div>
-    </div>
-    <div class="stat">
-      <div class="slabel">GPS Accuracy</div>
-      <div class="sval" id="s-acc">—</div>
-      <div class="sunit">metres</div>
-    </div>
-  </div>
-
-  <div id="err-box"></div>
-  <div id="status-box"></div>
-
-  <button class="btn btn-call" id="btn-call" onclick="callPerson()">
-    📞 Call <span id="btn-call-name">Now</span>
-  </button>
-
-  <button class="btn btn-locate" onclick="shareMyLocation()">
-    📤 Send My Location to <span id="btn-loc-name">Them</span>
-  </button>
-
-  <button class="btn btn-coming" onclick="iAmComing()">
-    🚗 I Am Coming to Help
-  </button>
-
-</div>
-<div class="powered">Powered by Guardian X • Map data © OpenStreetMap</div>
 
 <script>
-// ── Parse URL params ──────────────────────────────────────────────────────
-const p        = new URLSearchParams(location.search);
-const senderLat   = parseFloat(p.get('lat')   || '0');
-const senderLng   = parseFloat(p.get('lng')   || '0');
-const senderName  = decodeURIComponent(p.get('name')  || 'Emergency');
-const senderPhone = decodeURIComponent(p.get('phone') || '');
-const sentTime    = decodeURIComponent(p.get('time')  || '');
-const sentAddr    = decodeURIComponent(p.get('addr')  || '');
-
-// ── Fill static UI ────────────────────────────────────────────────────────
-document.title = senderName + ' — Emergency SOS';
-document.getElementById('hdr-title').textContent   = '🆘 ' + senderName + ' needs help!';
-document.getElementById('pc-name').textContent      = '🆘 ' + senderName;
-document.getElementById('btn-call-name').textContent = senderName;
-document.getElementById('btn-loc-name').textContent  = senderName;
-
-if (senderPhone) {
-  document.getElementById('pc-phone').textContent = '📱 ' + senderPhone;
-  document.getElementById('btn-call').style.display = 'flex';
-} else {
-  document.getElementById('btn-call').style.display = 'none';
-}
-if (sentAddr) document.getElementById('pc-loc').textContent  = '📍 ' + sentAddr;
-if (sentTime) document.getElementById('pc-time').textContent = '⏱ Sent at ' + sentTime;
-
-// ── Map ───────────────────────────────────────────────────────────────────
-let map, senderMarker, helperMarker, myLat, myLng;
-
-if (senderLat !== 0 && senderLng !== 0) {
-  map = L.map('map').setView([senderLat, senderLng], 15);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'© OpenStreetMap', maxZoom:19
-  }).addTo(map);
-  document.getElementById('loading').style.display = 'none';
-
-  const redIcon = L.divIcon({
-    html: `<div style="position:relative">
-      <div style="width:22px;height:22px;background:#D32F2F;border:3px solid #fff;
-        border-radius:50%;box-shadow:0 0 0 6px rgba(211,47,47,0.35)"></div>
-      <div style="position:absolute;top:-24px;left:50%;transform:translateX(-50%);
-        background:#D32F2F;color:#fff;font-size:9px;font-weight:800;padding:2px 5px;
-        border-radius:4px;white-space:nowrap">${senderName}</div>
-    </div>`,
-    iconSize:[22,22], iconAnchor:[11,11], className:''
-  });
-  senderMarker = L.marker([senderLat, senderLng], {icon: redIcon})
-    .addTo(map)
-    .bindPopup('<b>🆘 ' + senderName + '</b><br>Sent SOS from here');
-} else {
-  document.getElementById('loading').innerHTML =
-    '<p style="color:#EF5350;padding:20px;text-align:center">⚠️ No location in this link.<br>Try calling directly.</p>';
+function setLang(lang) {
+  // Hide all
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  // Show selected
+  document.getElementById('sec-' + lang).classList.add('visible');
+  event.target.classList.add('active');
+  // Update header subtitle
+  const subs = {
+    en: 'Emergency SOS — Privacy Policy',
+    ml: 'എമർജൻസി SOS — സ്വകാര്യതാ നയം',
+    hi: 'आपातकालीन SOS — गोपनीयता नीति',
+    ta: 'அவசரகால SOS — தனியுரிமைக் கொள்கை'
+  };
+  document.getElementById('hdr-sub').textContent = subs[lang];
 }
 
-// ── Haversine distance ────────────────────────────────────────────────────
-function haversine(lat1, lng1, lat2, lng2) {
-  const R = 6371, d2r = Math.PI/180;
-  const dLat = (lat2-lat1)*d2r, dLng = (lng2-lng1)*d2r;
-  const a = Math.sin(dLat/2)**2 +
-            Math.cos(lat1*d2r)*Math.cos(lat2*d2r)*Math.sin(dLng/2)**2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-
-// ── Get helper's location ─────────────────────────────────────────────────
-function getMyLocation(callback) {
-  if (!navigator.geolocation) {
-    showError('Your browser does not support location. Please call ' + senderName + ' directly.');
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      myLat = pos.coords.latitude;
-      myLng = pos.coords.longitude;
-      const acc = Math.round(pos.coords.accuracy);
-      document.getElementById('s-acc').textContent = acc;
-
-      if (senderLat !== 0) {
-        const dist = haversine(myLat, myLng, senderLat, senderLng);
-        if (dist < 1) {
-          document.getElementById('s-dist').textContent = Math.round(dist * 1000);
-          document.getElementById('s-dist-unit').textContent = 'metres away';
-        } else {
-          document.getElementById('s-dist').textContent = dist.toFixed(1);
-          document.getElementById('s-dist-unit').textContent = 'km away';
-        }
-        const etaMins = Math.round(dist / 30 * 60);
-        document.getElementById('s-eta').textContent = etaMins < 1 ? '<1' : etaMins;
-      }
-
-      const blueIcon = L.divIcon({
-        html: `<div style="width:16px;height:16px;background:#1565C0;border:3px solid #fff;border-radius:50%"></div>`,
-        iconSize:[16,16], iconAnchor:[8,8], className:''
-      });
-      if (helperMarker && map) map.removeLayer(helperMarker);
-      if (map) {
-        helperMarker = L.marker([myLat, myLng], {icon: blueIcon})
-          .addTo(map).bindPopup('<b>📍 You are here</b>');
-        if (senderLat !== 0) {
-          map.fitBounds([[senderLat,senderLng],[myLat,myLng]], {padding:[50,50]});
-        }
-      }
-      if (callback) callback();
-    },
-    err => {
-      const msgs = {1:'Location access denied.', 2:'Location unavailable.', 3:'Location timed out.'};
-      showError((msgs[err.code]||'Location error.') + ' Please call ' + senderName + ' directly.');
-    },
-    {enableHighAccuracy:true, timeout:12000, maximumAge:0}
-  );
-}
-
-function showError(msg) {
-  const b = document.getElementById('err-box');
-  b.style.display = 'block';
-  b.textContent = '⚠️ ' + msg;
-}
-function showStatus(msg) {
-  const b = document.getElementById('status-box');
-  b.style.display = 'block';
-  b.innerHTML = msg;
-}
-
-// Auto-get location on page load
-getMyLocation(null);
-
-// ── Button actions ────────────────────────────────────────────────────────
-function callPerson() {
-  if (senderPhone) window.location.href = 'tel:' + senderPhone.replace(/\s/g,'');
-}
-
-function shareMyLocation() {
-  getMyLocation(() => {
-    const mapsLink = 'https://maps.google.com/?q=' + myLat + ',' + myLng;
-    const msg =
-      '📍 ' + 'I can see your SOS. My location:\n' +
-      mapsLink + '\n\n' +
-      '— Sent via Guardian X';
-
-    if (senderPhone) {
-      // Try WhatsApp first — better for most users
-      const num = senderPhone.replace(/[^0-9+]/g,'');
-      const waUrl = 'https://api.whatsapp.com/send?phone=' + num +
-                    '&text=' + encodeURIComponent(msg);
-      window.open(waUrl, '_blank');
+// Auto-detect browser language on load
+const bl = navigator.language.toLowerCase().split('-')[0];
+const supported = ['en','ml','hi','ta'];
+if (supported.includes(bl) && bl !== 'en') {
+  // Find and click the matching button
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    if (b.getAttribute('onclick').includes("'" + bl + "'")) {
+      b.click();
     }
-    showStatus('✅ <b>Location shared with ' + senderName + '</b> via WhatsApp.<br>' +
-               'If WhatsApp didn\'t open, use SMS below.');
-  });
-}
-
-function iAmComing() {
-  getMyLocation(() => {
-    const mapsLink = 'https://maps.google.com/?q=' + myLat + ',' + myLng;
-    const msg =
-      '🚗 I AM COMING TO HELP YOU, ' + senderName + '!\n\n' +
-      '📍 My current location:\n' + mapsLink + '\n\n' +
-      'Stay where you are — I will reach you soon.\n\n' +
-      '— Sent via Guardian X';
-
-    if (senderPhone) {
-      const num = senderPhone.replace(/[^0-9+]/g,'');
-      // SMS for emergency reliability
-      window.location.href = 'sms:' + num + '?body=' + encodeURIComponent(msg);
-    }
-    showStatus(
-      '✅ <b>Message sent to ' + senderName + '.</b><br>' +
-      'They will see your location and know you\'re on the way.'
-    );
   });
 }
 </script>
