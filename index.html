@@ -1,164 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy — Guardian X SOS</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 24px 16px;
-            color: #222;
-            line-height: 1.7;
-        }
-        h1 { color: #C62828; font-size: 24px; margin-bottom: 4px; }
-        h2 { color: #1A237E; font-size: 17px; margin-top: 28px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-        p, li { font-size: 15px; }
-        ul { padding-left: 20px; }
-        .meta { color: #666; font-size: 13px; margin-bottom: 32px; }
-        .highlight { background: #FFF8E1; border-left: 4px solid #F9A825; padding: 10px 14px; border-radius: 4px; margin: 12px 0; }
-        footer { margin-top: 48px; font-size: 13px; color: #888; border-top: 1px solid #eee; padding-top: 16px; }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#0A0F1E"/>
+<title>Guardian X — Emergency Live Tracker</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0A0F1E;color:#fff;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+  #header{background:linear-gradient(135deg,#B71C1C,#7F0000);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,0.5)}
+  .sos-badge{background:#FF1744;border-radius:8px;padding:5px 11px;font-weight:900;font-size:18px;letter-spacing:3px;animation:pulse 1.2s ease-in-out infinite;flex-shrink:0}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,23,68,0.7)}70%{box-shadow:0 0 0 10px rgba(255,23,68,0)}}
+  #header .info{flex:1;min-width:0}
+  #header h1{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #header p{font-size:11px;opacity:0.7;margin-top:1px}
+  #map{flex:1;min-height:300px;width:100%;position:relative}
+  #loading{position:absolute;inset:0;background:#0D1B2A;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999}
+  .spinner{width:40px;height:40px;border:3px solid #1A2A3A;border-top:3px solid #4FC3F7;border-radius:50%;animation:spin 0.9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loading p{margin-top:10px;opacity:0.5;font-size:13px}
+  #panel{background:#0D1B2A;padding:12px 14px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;border-top:1px solid #1A2A3A}
+  .person-card{background:#1A0A0A;border:1.5px solid #D32F2F;border-radius:12px;padding:12px 14px}
+  .person-card .pname{font-size:17px;font-weight:800;color:#EF5350}
+  .person-card .pphone{font-size:13px;color:#FFCDD2;margin-top:3px}
+  .person-card .ptime{font-size:11px;opacity:0.4;margin-top:4px}
+  .person-card .ploc{font-size:11px;color:#90CAF9;margin-top:3px;opacity:0.8}
+  .stats-row{display:flex;gap:8px}
+  .stat{flex:1;background:#1A2A3A;border-radius:10px;padding:9px 8px;text-align:center}
+  .stat .slabel{font-size:8px;text-transform:uppercase;letter-spacing:1px;opacity:0.45;margin-bottom:2px}
+  .stat .sval{font-size:20px;font-weight:800;color:#4FC3F7;line-height:1.1}
+  .stat .sunit{font-size:9px;opacity:0.5;margin-top:1px}
+  .btn{width:100%;padding:13px 16px;border-radius:12px;border:none;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
+  .btn:active{opacity:0.75}
+  .btn-call{background:#1B5E20;color:#fff}
+  .btn-locate{background:#0D47A1;color:#fff}
+  .btn-coming{background:#4A148C;color:#fff}
+  #status-box{background:#0A200A;border:1px solid #2E7D32;border-radius:10px;padding:10px 12px;font-size:12.5px;color:#C8E6C9;display:none;line-height:1.5}
+  #err-box{background:#1A0A0A;border:1px solid #B71C1C;border-radius:10px;padding:10px 12px;font-size:12px;color:#FFCDD2;display:none;text-align:center}
+  .powered{text-align:center;font-size:10px;opacity:0.3;padding:6px;flex-shrink:0}
+</style>
 </head>
 <body>
 
-<h1>🛡️ Privacy Policy</h1>
-<h2 style="border:none; margin-top:0; color:#333; font-size:20px;">Guardian X — SOS</h2>
-<p class="meta">
-    Developed by: <strong>MZN Digital</strong><br>
-    Package: com.mzndigital.guardianxsos<br>
-    Last updated: March 2026
-</p>
-
-<div class="highlight">
-    <strong>Short version:</strong> We do not collect, store, or sell your personal data.
-    Your information stays on your device and is only sent directly to the emergency contacts
-    you choose.
+<div id="header">
+  <div class="sos-badge">SOS</div>
+  <div class="info">
+    <h1 id="hdr-title">Emergency Alert</h1>
+    <p id="hdr-sub">Guardian X • Live Location Tracker</p>
+  </div>
 </div>
 
-<h2>1. Introduction</h2>
-<p>
-    MZN Digital ("we", "our", "us") built the Guardian X — SOS mobile application
-    ("the App"). This privacy policy explains how the App handles information when you
-    use it. By using the App, you agree to the practices described here.
-</p>
+<div id="map">
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>Loading map...</p>
+  </div>
+</div>
 
-<h2>2. Information the App Uses</h2>
-<p>The App uses the following information <strong>only on your device</strong>:</p>
-<ul>
-    <li><strong>Location (GPS)</strong> — Your GPS coordinates are used to build the SOS
-    alert message. Location data is sent directly from your device to your saved
-    emergency contacts via SMS. It is not transmitted to any server operated by us.</li>
+<div id="panel">
 
-    <li><strong>Contacts</strong> — The App reads your phone contacts only when you
-    choose to select an emergency contact. Contact data is stored locally on your device
-    only. We do not access or store your full contact list.</li>
+  <div class="person-card">
+    <div class="pname" id="pc-name">Loading...</div>
+    <div class="pphone" id="pc-phone"></div>
+    <div class="ploc" id="pc-loc"></div>
+    <div class="ptime" id="pc-time"></div>
+  </div>
 
-    <li><strong>Phone calls</strong> — The App can make phone calls to your saved
-    emergency contacts or local emergency services (Police/Ambulance/Fire) when you
-    activate SOS. No call data is transmitted to us.</li>
+  <div class="stats-row">
+    <div class="stat">
+      <div class="slabel">Distance</div>
+      <div class="sval" id="s-dist">—</div>
+      <div class="sunit" id="s-dist-unit">calculating</div>
+    </div>
+    <div class="stat">
+      <div class="slabel">Est. Drive</div>
+      <div class="sval" id="s-eta">—</div>
+      <div class="sunit">minutes</div>
+    </div>
+    <div class="stat">
+      <div class="slabel">GPS Accuracy</div>
+      <div class="sval" id="s-acc">—</div>
+      <div class="sunit">metres</div>
+    </div>
+  </div>
 
-    <li><strong>SMS</strong> — The App sends SMS messages to your saved emergency
-    contacts during SOS activation. Messages contain your name, phone number, and
-    GPS location. These are sent from your own SIM — we do not see or store them.</li>
+  <div id="err-box"></div>
+  <div id="status-box"></div>
 
-    <li><strong>Camera / Flash</strong> — Used only for the Morse SOS strobe feature
-    (flash the camera LED). No photos or video are taken or stored.</li>
+  <button class="btn btn-call" id="btn-call" onclick="callPerson()">
+    📞 Call <span id="btn-call-name">Now</span>
+  </button>
 
-    <li><strong>Microphone</strong> — Not used.</li>
+  <button class="btn btn-locate" onclick="shareMyLocation()">
+    📤 Send My Location to <span id="btn-loc-name">Them</span>
+  </button>
 
-    <li><strong>Storage</strong> — App settings (language, contact names, preferences)
-    are stored locally on your device using Android SharedPreferences. Nothing is
-    uploaded to external servers.</li>
-</ul>
+  <button class="btn btn-coming" onclick="iAmComing()">
+    🚗 I Am Coming to Help
+  </button>
 
-<h2>3. Data We Do NOT Collect</h2>
-<ul>
-    <li>We do not operate any server that receives your data</li>
-    <li>We do not collect analytics about your usage</li>
-    <li>We do not collect your name, email, or account information</li>
-    <li>We do not track your location in the background beyond what you explicitly enable</li>
-    <li>We do not sell, rent, or trade any data to third parties</li>
-    <li>No account or registration is required to use the App</li>
-</ul>
+</div>
+<div class="powered">Powered by Guardian X • Map data © OpenStreetMap</div>
 
-<h2>4. Third-Party Services</h2>
-<p>The App uses the following third-party services which have their own privacy policies:</p>
+<script>
+// ── Parse URL params ──────────────────────────────────────────────────────
+const p        = new URLSearchParams(location.search);
+const senderLat   = parseFloat(p.get('lat')   || '0');
+const senderLng   = parseFloat(p.get('lng')   || '0');
+const senderName  = decodeURIComponent(p.get('name')  || 'Emergency');
+const senderPhone = decodeURIComponent(p.get('phone') || '');
+const sentTime    = decodeURIComponent(p.get('time')  || '');
+const sentAddr    = decodeURIComponent(p.get('addr')  || '');
 
-<ul>
-    <li>
-        <strong>Google AdMob</strong> — The App displays advertisements provided by
-        Google AdMob. AdMob may collect device identifiers and usage data to serve
-        relevant ads. You can review Google's privacy policy at:
-        <a href="https://policies.google.com/privacy">policies.google.com/privacy</a>
-    </li>
-    <li>
-        <strong>Google Play Services</strong> — Used for location detection and app
-        distribution. Subject to Google's terms:
-        <a href="https://policies.google.com/privacy">policies.google.com/privacy</a>
-    </li>
-</ul>
+// ── Fill static UI ────────────────────────────────────────────────────────
+document.title = senderName + ' — Emergency SOS';
+document.getElementById('hdr-title').textContent   = '🆘 ' + senderName + ' needs help!';
+document.getElementById('pc-name').textContent      = '🆘 ' + senderName;
+document.getElementById('btn-call-name').textContent = senderName;
+document.getElementById('btn-loc-name').textContent  = senderName;
 
-<h2>5. Permissions Explained</h2>
-<ul>
-    <li><strong>ACCESS_FINE_LOCATION / ACCESS_COARSE_LOCATION</strong> — To get your GPS coordinates for SOS alerts</li>
-    <li><strong>ACCESS_BACKGROUND_LOCATION</strong> — To continue sending location updates during Live Tracking even when the screen is off</li>
-    <li><strong>READ_CONTACTS</strong> — To let you pick emergency contacts from your phone book</li>
-    <li><strong>SEND_SMS</strong> — To send SOS alert messages to your emergency contacts</li>
-    <li><strong>CALL_PHONE</strong> — To make direct emergency calls without opening the dialler</li>
-    <li><strong>CAMERA</strong> — To use the flashlight for Morse SOS signal</li>
-    <li><strong>VIBRATE</strong> — For Morse SOS vibration pattern</li>
-    <li><strong>POST_NOTIFICATIONS</strong> — To show SOS active notification (Android 13+)</li>
-    <li><strong>RECEIVE_BOOT_COMPLETED</strong> — To restart shake detection after device reboot</li>
-    <li><strong>REQUEST_IGNORE_BATTERY_OPTIMIZATIONS</strong> — To ensure SOS features work in background</li>
-</ul>
+if (senderPhone) {
+  document.getElementById('pc-phone').textContent = '📱 ' + senderPhone;
+  document.getElementById('btn-call').style.display = 'flex';
+} else {
+  document.getElementById('btn-call').style.display = 'none';
+}
+if (sentAddr) document.getElementById('pc-loc').textContent  = '📍 ' + sentAddr;
+if (sentTime) document.getElementById('pc-time').textContent = '⏱ Sent at ' + sentTime;
 
-<h2>6. Children's Privacy</h2>
-<p>
-    This App is intended for users aged 18 and over. We do not knowingly collect
-    information from children under 18. If you believe a child has provided personal
-    information through the App, please contact us and we will take steps to delete it.
-</p>
+// ── Map ───────────────────────────────────────────────────────────────────
+let map, senderMarker, helperMarker, myLat, myLng;
 
-<h2>7. Data Security</h2>
-<p>
-    Since no personal data is transmitted to our servers, data security risks to us
-    are minimal. Your emergency contact information and preferences stored locally on
-    your device are protected by Android's app sandboxing. We recommend securing your
-    device with a PIN or biometric lock.
-</p>
+if (senderLat !== 0 && senderLng !== 0) {
+  map = L.map('map').setView([senderLat, senderLng], 15);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'© OpenStreetMap', maxZoom:19
+  }).addTo(map);
+  document.getElementById('loading').style.display = 'none';
 
-<h2>8. Changes to This Policy</h2>
-<p>
-    We may update this privacy policy from time to time. Changes will be reflected on
-    this page with an updated date. Continued use of the App after changes constitutes
-    acceptance of the updated policy.
-</p>
+  const redIcon = L.divIcon({
+    html: `<div style="position:relative">
+      <div style="width:22px;height:22px;background:#D32F2F;border:3px solid #fff;
+        border-radius:50%;box-shadow:0 0 0 6px rgba(211,47,47,0.35)"></div>
+      <div style="position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+        background:#D32F2F;color:#fff;font-size:9px;font-weight:800;padding:2px 5px;
+        border-radius:4px;white-space:nowrap">${senderName}</div>
+    </div>`,
+    iconSize:[22,22], iconAnchor:[11,11], className:''
+  });
+  senderMarker = L.marker([senderLat, senderLng], {icon: redIcon})
+    .addTo(map)
+    .bindPopup('<b>🆘 ' + senderName + '</b><br>Sent SOS from here');
+} else {
+  document.getElementById('loading').innerHTML =
+    '<p style="color:#EF5350;padding:20px;text-align:center">⚠️ No location in this link.<br>Try calling directly.</p>';
+}
 
-<h2>9. Your Rights</h2>
-<p>
-    Since we do not collect your personal data, there is no stored data to access,
-    correct, or delete on our end. All App data (contacts, preferences, settings) can
-    be deleted by uninstalling the App from your device.
-</p>
+// ── Haversine distance ────────────────────────────────────────────────────
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371, d2r = Math.PI/180;
+  const dLat = (lat2-lat1)*d2r, dLng = (lng2-lng1)*d2r;
+  const a = Math.sin(dLat/2)**2 +
+            Math.cos(lat1*d2r)*Math.cos(lat2*d2r)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
 
-<h2>10. Contact Us</h2>
-<p>
-    If you have questions about this privacy policy or the App's data practices,
-    please contact us:
-</p>
-<ul>
-    <li>Company: MZN Digital</li>
-    <li>Email: <strong>muhammedzuhairmba@gmail.com</strong></li>
-    <li>App: Guardian X — SOS (com.mzndigital.guardianxsos)</li>
-</ul>
+// ── Get helper's location ─────────────────────────────────────────────────
+function getMyLocation(callback) {
+  if (!navigator.geolocation) {
+    showError('Your browser does not support location. Please call ' + senderName + ' directly.');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      myLat = pos.coords.latitude;
+      myLng = pos.coords.longitude;
+      const acc = Math.round(pos.coords.accuracy);
+      document.getElementById('s-acc').textContent = acc;
 
-<footer>
-    © 2026 MZN Digital. Guardian X — SOS.<br>
-    This privacy policy was last updated in March 2026.
-</footer>
+      if (senderLat !== 0) {
+        const dist = haversine(myLat, myLng, senderLat, senderLng);
+        if (dist < 1) {
+          document.getElementById('s-dist').textContent = Math.round(dist * 1000);
+          document.getElementById('s-dist-unit').textContent = 'metres away';
+        } else {
+          document.getElementById('s-dist').textContent = dist.toFixed(1);
+          document.getElementById('s-dist-unit').textContent = 'km away';
+        }
+        const etaMins = Math.round(dist / 30 * 60);
+        document.getElementById('s-eta').textContent = etaMins < 1 ? '<1' : etaMins;
+      }
 
+      const blueIcon = L.divIcon({
+        html: `<div style="width:16px;height:16px;background:#1565C0;border:3px solid #fff;border-radius:50%"></div>`,
+        iconSize:[16,16], iconAnchor:[8,8], className:''
+      });
+      if (helperMarker && map) map.removeLayer(helperMarker);
+      if (map) {
+        helperMarker = L.marker([myLat, myLng], {icon: blueIcon})
+          .addTo(map).bindPopup('<b>📍 You are here</b>');
+        if (senderLat !== 0) {
+          map.fitBounds([[senderLat,senderLng],[myLat,myLng]], {padding:[50,50]});
+        }
+      }
+      if (callback) callback();
+    },
+    err => {
+      const msgs = {1:'Location access denied.', 2:'Location unavailable.', 3:'Location timed out.'};
+      showError((msgs[err.code]||'Location error.') + ' Please call ' + senderName + ' directly.');
+    },
+    {enableHighAccuracy:true, timeout:12000, maximumAge:0}
+  );
+}
+
+function showError(msg) {
+  const b = document.getElementById('err-box');
+  b.style.display = 'block';
+  b.textContent = '⚠️ ' + msg;
+}
+function showStatus(msg) {
+  const b = document.getElementById('status-box');
+  b.style.display = 'block';
+  b.innerHTML = msg;
+}
+
+// Auto-get location on page load
+getMyLocation(null);
+
+// ── Button actions ────────────────────────────────────────────────────────
+function callPerson() {
+  if (senderPhone) window.location.href = 'tel:' + senderPhone.replace(/\s/g,'');
+}
+
+function shareMyLocation() {
+  getMyLocation(() => {
+    const mapsLink = 'https://maps.google.com/?q=' + myLat + ',' + myLng;
+    const msg =
+      '📍 ' + 'I can see your SOS. My location:\n' +
+      mapsLink + '\n\n' +
+      '— Sent via Guardian X';
+
+    if (senderPhone) {
+      // Try WhatsApp first — better for most users
+      const num = senderPhone.replace(/[^0-9+]/g,'');
+      const waUrl = 'https://api.whatsapp.com/send?phone=' + num +
+                    '&text=' + encodeURIComponent(msg);
+      window.open(waUrl, '_blank');
+    }
+    showStatus('✅ <b>Location shared with ' + senderName + '</b> via WhatsApp.<br>' +
+               'If WhatsApp didn\'t open, use SMS below.');
+  });
+}
+
+function iAmComing() {
+  getMyLocation(() => {
+    const mapsLink = 'https://maps.google.com/?q=' + myLat + ',' + myLng;
+    const msg =
+      '🚗 I AM COMING TO HELP YOU, ' + senderName + '!\n\n' +
+      '📍 My current location:\n' + mapsLink + '\n\n' +
+      'Stay where you are — I will reach you soon.\n\n' +
+      '— Sent via Guardian X';
+
+    if (senderPhone) {
+      const num = senderPhone.replace(/[^0-9+]/g,'');
+      // SMS for emergency reliability
+      window.location.href = 'sms:' + num + '?body=' + encodeURIComponent(msg);
+    }
+    showStatus(
+      '✅ <b>Message sent to ' + senderName + '.</b><br>' +
+      'They will see your location and know you\'re on the way.'
+    );
+  });
+}
+</script>
 </body>
 </html>
